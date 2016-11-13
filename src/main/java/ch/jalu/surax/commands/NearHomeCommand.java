@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +20,11 @@ import java.util.Map;
 public class NearHomeCommand implements Command {
 
     private static final int MAX_ENTRIES = 5;
-    private final EssentialsHook essentialsHook;
 
-    public NearHomeCommand(EssentialsHook essentialsHook) {
-        this.essentialsHook = essentialsHook;
+    @Inject
+    private EssentialsHook essentialsHook;
+
+    NearHomeCommand() {
     }
 
     @Override
@@ -33,7 +35,7 @@ public class NearHomeCommand implements Command {
     @Override
     public void execute(CommandSender sender, List<String> arguments) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("You must be a player");
+            sender.sendMessage("You must be a player to run this command");
             return;
         } else if (!Permission.NEAR_HOME.allows(sender)) {
             sender.sendMessage("You do not have permission to use this command");
