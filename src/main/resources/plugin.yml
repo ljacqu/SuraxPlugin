@@ -1,0 +1,13 @@
+name: SuraxPlugin
+main: ch.jalu.surax.SuraxPlugin
+version: 1.0
+softdepend:
+    - Essentials
+commands:
+    nearhome:
+        description: Finds your homes nearest to you
+        usage: '/nearhome [-flat]'
+permissions:
+    surax.nearhome:
+         description: Usage of /nearhome to see one's own homes
+         default: op
