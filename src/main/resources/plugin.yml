@@ -7,12 +7,21 @@ commands:
     nearhome:
         description: Finds your homes nearest to you
         usage: '/nearhome [-flat]'
+    hideme:
+        description: Hides a player from the supplied players
+        usage: hideme <players...>
+    unhideme:
+       description: Unhides a player from the supplied players
+       usage: unhideme <players...>
     hide:
-        description:
-        usage: hide add <player>|hide remove <player>
+       description: Hides a player from the given players
+       usage: hide <hider> <hiddenFrom...>
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
+         default: op
+    surax.hideme:
+         description: Usage of the /hideme and /unhideme command
          default: op
     surax.hide:
          description: Usage of the /hide command

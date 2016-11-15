@@ -5,6 +5,7 @@ import ch.jalu.surax.config.InvisibilityConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Collection;
@@ -44,20 +45,26 @@ public class InvisibilityManager {
         }
     }
 
-    public void processHide(Player hider, String hidee) {
-        Player hideePlayer = Bukkit.getPlayerExact(hidee);
-        if (hideePlayer != null) {
-            hideePlayer.hidePlayer(hider);
+    public void processHide(@Nullable Player hider, Collection<String> hidee) {
+        if (hider == null) {
+            return;
         }
-        essentialsHook.processHide(hider.getName(), hidee);
+        hidee.stream()
+            .peek(h -> essentialsHook.processHide(hider.getName(), h))
+            .map(Bukkit::getPlayerExact)
+            .filter(p -> p != null)
+            .forEach(p -> p.hidePlayer(hider));
     }
 
-    public void processUnhide(Player hider, String hidee) {
-        Player hideePlayer = Bukkit.getPlayerExact(hidee);
-        if (hideePlayer != null) {
-            hideePlayer.showPlayer(hider);
+    public void processUnhide(@Nullable Player hider, Collection<String> hidee) {
+        if (hider == null) {
+            return;
         }
-        essentialsHook.processUnhide(hider.getName(), hidee);
+        hidee.stream()
+            .peek(h -> essentialsHook.processUnhide(hider.getName(), h))
+            .map(Bukkit::getPlayerExact)
+            .filter(p -> p != null)
+            .forEach(p -> p.showPlayer(hider));
     }
 
     public void setHideEffectsOnJoin(Player player) {
@@ -66,7 +73,7 @@ public class InvisibilityManager {
         // Hide player from the players he supplied
         Set<String> playersHiddenFrom = allBlockedPlayers.get(playerName);
         if (isNotEmpty(playersHiddenFrom)) {
-            playersHiddenFrom.forEach(p -> processHide(player, p));
+            processHide(player, playersHiddenFrom);
         }
         // player might be the hidee also, so hide other players for him when he joins
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {

@@ -1,11 +1,11 @@
 package ch.jalu.surax.commands;
 
+import ch.jalu.surax.Permission;
 import ch.jalu.surax.domain.Home;
 import ch.jalu.surax.service.EssentialsHook;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Implementation of the {@code /nearhome} command.
  */
-public class NearHomeCommand implements Command {
+public class NearHomeCommand extends PlayerCommand {
 
     private static final int MAX_ENTRIES = 5;
 
@@ -32,13 +32,8 @@ public class NearHomeCommand implements Command {
     }
 
     @Override
-    public void execute(CommandSender sender, List<String> arguments) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("You must be a player to run this command");
-            return;
-        }
-
-        Multimap<Double, String> homesByDistance = getHomesByDistance((Player) sender, arguments.contains("-flat"));
+    public void execute(Player sender, List<String> arguments) {
+        Multimap<Double, String> homesByDistance = getHomesByDistance(sender, arguments.contains("-flat"));
         if (homesByDistance != null) {
             int shownEntries = 0;
             for (Map.Entry<Double, String> entry : homesByDistance.entries()) {
@@ -48,6 +43,11 @@ public class NearHomeCommand implements Command {
                 }
             }
         }
+    }
+
+    @Override
+    public Permission getRequiredPermission() {
+        return Permission.NEAR_HOME;
     }
 
     @Nullable

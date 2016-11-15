@@ -9,7 +9,9 @@ public enum Permission {
 
     NEAR_HOME("surax.nearhome"),
 
-    HIDE_COMMAND("surax.hide");
+    HIDE_COMMAND("surax.hide"),
+
+    HIDE_ME_COMMAND("surax.hideme");
 
     private final String node;
 

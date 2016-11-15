@@ -68,19 +68,19 @@ public class InvisibilityConfig {
             : ignoredPlayers;
     }
 
-    public void addBlockedPlayer(String ignorer, String ignoree) {
+    public void addBlockedPlayer(String ignorer, List<String> ignoree) {
         Set<String> ignoredPlayers = invisibilityRules.get(ignorer.toLowerCase());
         if (ignoredPlayers == null) {
-            invisibilityRules.put(ignorer.toLowerCase(), newHashSet(ignoree.toLowerCase()));
-        } else {
-            ignoredPlayers.add(ignoree.toLowerCase());
+            ignoredPlayers = new HashSet<>();
+            invisibilityRules.put(ignorer.toLowerCase(), ignoredPlayers);
         }
+        ignoredPlayers.addAll(ignoree.stream().map(String::toLowerCase).collect(Collectors.toList()));
     }
 
-    public void removeBlockedPlayer(String ignorer, String ignoree) {
+    public void removeBlockedPlayer(String ignorer, List<String> ignoree) {
         Set<String> ignoredPlayers = invisibilityRules.get(ignorer.toLowerCase());
         if (ignoredPlayers != null) {
-            ignoredPlayers.remove(ignoree.toLowerCase());
+            ignoredPlayers.removeAll(ignoree.stream().map(String::toLowerCase).collect(Collectors.toList()));
         }
     }
 
@@ -101,11 +101,4 @@ public class InvisibilityConfig {
             logger.warning("Could not save config: got " + e.getMessage());
         }
     }
-
-    private static Set<String> newHashSet(String name) {
-        Set<String> set = new HashSet<>();
-        set.add(name);
-        return set;
-    }
-
 }
