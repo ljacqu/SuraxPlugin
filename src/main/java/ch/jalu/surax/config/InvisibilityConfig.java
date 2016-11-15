@@ -2,13 +2,10 @@ package ch.jalu.surax.config;
 
 import ch.jalu.surax.domain.DataFolder;
 import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,13 +19,15 @@ import java.util.stream.Collectors;
 /**
  * Handles the configuration of which players should be hidden for whom.
  */
-public class InvisibilityConfig {
+public class InvisibilityConfig implements PrePersist {
 
     @Inject
     @DataFolder
     private File dataFolder;
     @Inject
     private Logger logger;
+    @Inject
+    private PersistenceFileLoader fileLoader;
 
     private File configFile;
     private Map<String, Set<String>> invisibilityRules = new HashMap<>();
@@ -37,17 +36,9 @@ public class InvisibilityConfig {
     }
 
     @PostConstruct
-    private void loadInvisibilityRules() throws IOException {
-        configFile = new File(dataFolder, "invisible_rules.yml");
-        if (!configFile.exists()) {
-            configFile.getParentFile().mkdirs();
-            configFile.createNewFile();
-        }
-
-        FileConfiguration conf = YamlConfiguration.loadConfiguration(configFile);
-        Object rules0 = conf.get("rules");
-        if (rules0 instanceof MemorySection) {
-            MemorySection rules = (MemorySection) rules0;
+    private void loadInvisibilityRules() {
+        MemorySection rules = fileLoader.getEntry("hidden", MemorySection.class);
+        if (rules != null) {
             for (String key : rules.getKeys(false)) {
                 Object entry = rules.get(key);
                 if (entry instanceof List<?>) {
@@ -88,17 +79,12 @@ public class InvisibilityConfig {
         return invisibilityRules;
     }
 
-    public void save() {
-        FileConfiguration configuration = YamlConfiguration.loadConfiguration(configFile);
+    @Override
+    public void prePersist() {
         Map<String, List<String>> exportableRules = new HashMap<>();
         for (Map.Entry<String, Set<String>> entry : invisibilityRules.entrySet()) {
             exportableRules.put(entry.getKey(), new ArrayList<>(entry.getValue()));
         }
-        configuration.set("rules", exportableRules);
-        try {
-            configuration.save(configFile);
-        } catch (IOException e) {
-            logger.warning("Could not save config: got " + e.getMessage());
-        }
+        fileLoader.setSection("rules", exportableRules);
     }
 }

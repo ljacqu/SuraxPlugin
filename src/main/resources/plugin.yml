@@ -9,13 +9,16 @@ commands:
         usage: '/nearhome [-flat]'
     hideme:
         description: Hides a player from the supplied players
-        usage: hideme <players...>
+        usage: '/hideme <players...>'
     unhideme:
        description: Unhides a player from the supplied players
-       usage: unhideme <players...>
+       usage: '/unhideme <players...>'
     hide:
        description: Hides a player from the given players
-       usage: hide <hider> <hiddenFrom...>
+       usage: '/hide <hider> <hiddenFrom...>'
+    pvp:
+       description: Toggles PVP on or off. PVP only works between two players with PVP enabled.
+       usage: '/pvp on | /pvp off'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -25,4 +28,7 @@ permissions:
          default: op
     surax.hide:
          description: Usage of the /hide command
+         default: op
+    surax.pvp:
+         description: Usage of the /pvp command
          default: op

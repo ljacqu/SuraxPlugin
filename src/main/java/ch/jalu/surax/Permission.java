@@ -11,7 +11,9 @@ public enum Permission {
 
     HIDE_COMMAND("surax.hide"),
 
-    HIDE_ME_COMMAND("surax.hideme");
+    HIDE_ME_COMMAND("surax.hideme"),
+
+    PVP_COMMAND("surax.pvp");
 
     private final String node;
 

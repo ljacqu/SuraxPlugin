@@ -2,9 +2,10 @@ package ch.jalu.surax;
 
 import ch.jalu.injector.Injector;
 import ch.jalu.injector.InjectorBuilder;
-import ch.jalu.surax.config.InvisibilityConfig;
+import ch.jalu.surax.config.PersistenceFileLoader;
 import ch.jalu.surax.domain.DataFolder;
 import ch.jalu.surax.listeners.InvisibilityListener;
+import ch.jalu.surax.listeners.PvpListener;
 import ch.jalu.surax.listeners.ServerListener;
 import ch.jalu.surax.service.CommandHandler;
 import org.bukkit.Server;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
 public class SuraxPlugin extends JavaPlugin {
 
     private CommandHandler commandHandler;
-    private InvisibilityConfig invisibilityConfig;
+    private PersistenceFileLoader persistenceFileLoader;
 
     @Override
     public void onEnable() {
@@ -38,9 +39,9 @@ public class SuraxPlugin extends JavaPlugin {
         injector.provide(DataFolder.class, getDataFolder());
 
         commandHandler = injector.getSingleton(CommandHandler.class);
-        invisibilityConfig = injector.getSingleton(InvisibilityConfig.class);
+        persistenceFileLoader = injector.getSingleton(PersistenceFileLoader.class);
 
-        registerListeners(injector, ServerListener.class, InvisibilityListener.class);
+        registerListeners(injector, ServerListener.class, InvisibilityListener.class, PvpListener.class);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class SuraxPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        invisibilityConfig.save();
+        persistenceFileLoader.save();
     }
 
     @SafeVarargs
