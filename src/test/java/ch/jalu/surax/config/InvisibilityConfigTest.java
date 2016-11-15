@@ -45,7 +45,7 @@ public class InvisibilityConfigTest {
     }
 
     @Test
-    public void shouldSaveCorrectly() {
+    public void shouldLoadCorrectly() {
         // given / when
         Set<String> bobbyIgnored = config.getBlockedPlayers("bobby");
         Set<String> otherIgnored = config.getBlockedPlayers("other"); // doesn't exist

@@ -67,6 +67,26 @@ public class EssentialsHook {
         return getHomesInWorld(user, world);
     }
 
+    public void processHide(String hider, String hidee) {
+        if (isHooked) {
+            User hiderPlayer = essentials.getUser(hider);
+            User hideePlayer = essentials.getUser(hidee);
+            if (hiderPlayer != null && hideePlayer != null) {
+                hideePlayer.setIgnoredPlayer(hiderPlayer, true);
+            }
+        }
+    }
+
+    public void processUnhide(String hider, String hidee) {
+        if (isHooked) {
+            User hiderPlayer = essentials.getUser(hider);
+            User hideePlayer = essentials.getUser(hidee);
+            if (hiderPlayer != null && hideePlayer != null) {
+                hideePlayer.setIgnoredPlayer(hiderPlayer, false);
+            }
+        }
+    }
+
     private List<Home> getHomesInWorld(IUser user, World world) {
         List<Home> homes = new ArrayList<>();
         for (String name : user.getHomes()) {

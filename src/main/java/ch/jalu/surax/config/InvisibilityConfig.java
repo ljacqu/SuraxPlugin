@@ -84,6 +84,10 @@ public class InvisibilityConfig {
         }
     }
 
+    public Map<String, Set<String>> getAllBlockedPlayers() {
+        return invisibilityRules;
+    }
+
     public void save() {
         FileConfiguration configuration = YamlConfiguration.loadConfiguration(configFile);
         Map<String, List<String>> exportableRules = new HashMap<>();

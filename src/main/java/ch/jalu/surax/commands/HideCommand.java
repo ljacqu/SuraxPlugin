@@ -2,6 +2,7 @@ package ch.jalu.surax.commands;
 
 import ch.jalu.surax.Permission;
 import ch.jalu.surax.config.InvisibilityConfig;
+import ch.jalu.surax.service.InvisibilityManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,6 +19,8 @@ public class HideCommand implements Command {
 
     @Inject
     private InvisibilityConfig config;
+    @Inject
+    private InvisibilityManager invisibilityManager;
 
     @Override
     public String getName() {
@@ -35,9 +38,11 @@ public class HideCommand implements Command {
         } else {
             if (ADD.equalsIgnoreCase(arguments.get(0))) {
                 config.addBlockedPlayer(sender.getName(), arguments.get(1));
+                invisibilityManager.processHide((Player) sender, arguments.get(1));
                 sender.sendMessage("You are now hidden from player " + arguments.get(1));
             } else { // REMOVE.equalsIgnoreCase
                 config.removeBlockedPlayer(sender.getName(), arguments.get(1));
+                invisibilityManager.processUnhide((Player) sender, arguments.get(1));
                 sender.sendMessage("Player " + arguments.get(1) + " will now see you again");
             }
         }
