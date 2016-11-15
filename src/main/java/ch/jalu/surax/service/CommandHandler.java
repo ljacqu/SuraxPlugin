@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class CommandHandler {
 
-    private static final List<Class<? extends Command>> COMMAND_CLASSES = ImmutableList.of(
+    public static final List<Class<? extends Command>> COMMAND_CLASSES = ImmutableList.of(
         NearHomeCommand.class, HideCommand.class, HideMeCommand.class, UnhideMeCommand.class, PvpCommand.class);
     private Map<String, Command> commands = new HashMap<>();
 
