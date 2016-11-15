@@ -7,7 +7,9 @@ import org.bukkit.command.CommandSender;
  */
 public enum Permission {
 
-    NEAR_HOME("surax.nearhome");
+    NEAR_HOME("surax.nearhome"),
+
+    HIDE_COMMAND("surax.hide");
 
     private final String node;
 

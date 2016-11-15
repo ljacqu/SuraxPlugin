@@ -1,4 +1,4 @@
-package ch.jalu.surax;
+package ch.jalu.surax.listeners;
 
 import ch.jalu.surax.service.EssentialsHook;
 import org.bukkit.event.EventHandler;

@@ -3,6 +3,7 @@ package ch.jalu.surax.service;
 import ch.jalu.injector.Injector;
 import ch.jalu.surax.Permission;
 import ch.jalu.surax.commands.Command;
+import ch.jalu.surax.commands.HideCommand;
 import ch.jalu.surax.commands.NearHomeCommand;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,8 @@ import java.util.Map;
  */
 public class CommandHandler {
 
-    private static final List<Class<? extends Command>> COMMAND_CLASSES = ImmutableList.of(NearHomeCommand.class);
+    private static final List<Class<? extends Command>> COMMAND_CLASSES =
+        ImmutableList.of(NearHomeCommand.class, HideCommand.class);
     private Map<String, Command> commands = new HashMap<>();
 
     @Inject

@@ -1,6 +1,5 @@
 package ch.jalu.surax.commands;
 
-import ch.jalu.surax.Permission;
 import ch.jalu.surax.domain.Home;
 import ch.jalu.surax.service.EssentialsHook;
 import com.google.common.collect.Multimap;
@@ -36,9 +35,6 @@ public class NearHomeCommand implements Command {
     public void execute(CommandSender sender, List<String> arguments) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("You must be a player to run this command");
-            return;
-        } else if (!Permission.NEAR_HOME.allows(sender)) {
-            sender.sendMessage("You do not have permission to use this command");
             return;
         }
 
