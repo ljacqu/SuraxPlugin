@@ -1,6 +1,7 @@
 package ch.jalu.surax.listeners;
 
 import ch.jalu.surax.config.InvisibilityConfig;
+import ch.jalu.surax.service.InvisibilityManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,9 @@ public class InvisibilityListener implements Listener {
     @Inject
     private InvisibilityConfig config;
 
+    @Inject
+    private InvisibilityManager invisibilityManager;
+
     InvisibilityListener() {
     }
 
@@ -44,6 +48,7 @@ public class InvisibilityListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         sendMessageToNonHiddenPlayers(event::getPlayer, event::getJoinMessage, event::setJoinMessage);
+        invisibilityManager.setHideEffectsOnJoin(event.getPlayer());
     }
 
     @EventHandler
