@@ -1,16 +1,16 @@
 # Utility commands
 ### Commands
 - **/nearhome**: Finds your homes nearest to you
-    - Permission: NEAR_HOME
+    - Permission: surax.nearhome
 
 - **/hide**: Hides a player from the given players
-    - Permission: HIDE_COMMAND
+    - Permission: surax.hide
 
 - **/hideme**: Hides a player from the supplied players
-    - Permission: HIDE_ME_COMMAND
+    - Permission: surax.hideme
 
 - **/unhideme**: Unhides a player from the supplied players
-    - Permission: HIDE_ME_COMMAND
+    - Permission: surax.hideme
 
 - **/pvp**: Toggles PVP on or off. PVP only works between two players with PVP enabled.
-    - Permission: PVP_COMMAND
+    - Permission: surax.pvp

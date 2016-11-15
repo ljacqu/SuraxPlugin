@@ -28,7 +28,7 @@ public class GenerateReadme {
         for (Command command : commands) {
             result += "\n- **/" + command.getName() + "**: "
                 + pluginYml.get("commands." + command.getName() + ".description");
-            result += "\n    - Permission: " + command.getRequiredPermission();
+            result += "\n    - Permission: " + command.getRequiredPermission().getNode();
             result += "\n";
         }
 
