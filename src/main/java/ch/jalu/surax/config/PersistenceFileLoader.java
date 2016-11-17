@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -23,7 +24,7 @@ public class PersistenceFileLoader {
     @Inject
     private Logger logger;
     @Inject
-    private Injector injector;
+    private PrePersistTracker prePersistTracker;
 
     private File configFile;
     private FileConfiguration configuration;
@@ -56,12 +57,21 @@ public class PersistenceFileLoader {
     }
 
     public void save() {
-        injector.retrieveAllOfType(PrePersist.class).forEach(PrePersist::prePersist);
+        prePersistTracker.getPrePersistClasses().forEach(PrePersist::prePersist);
 
         try {
             configuration.save(configFile);
         } catch (IOException e) {
             logger.warning("Could not save config: got " + e.getMessage());
+        }
+    }
+
+    static class PrePersistTracker {
+        @Inject
+        private Injector injector;
+
+        Collection<PrePersist> getPrePersistClasses() {
+            return injector.retrieveAllOfType(PrePersist.class);
         }
     }
 }

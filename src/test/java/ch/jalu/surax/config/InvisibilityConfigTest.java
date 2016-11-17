@@ -3,6 +3,7 @@ package ch.jalu.surax.config;
 import ch.jalu.injector.testing.BeforeInjecting;
 import ch.jalu.injector.testing.DelayedInjectionRunner;
 import ch.jalu.injector.testing.InjectDelayed;
+import ch.jalu.surax.config.PersistenceFileLoader.PrePersistTracker;
 import ch.jalu.surax.domain.DataFolder;
 import com.google.common.io.Files;
 import org.junit.Rule;
@@ -26,9 +27,13 @@ public class InvisibilityConfigTest {
 
     @InjectDelayed
     private InvisibilityConfig config;
+    @InjectDelayed
+    private PersistenceFileLoader fileLoader;
 
     @Mock
     private Logger logger;
+    @Mock
+    private PrePersistTracker prePersistTracker;
 
     @DataFolder
     private File dataFolder;
@@ -39,8 +44,8 @@ public class InvisibilityConfigTest {
     @BeforeInjecting
     public void setDataFolder() throws Exception {
         dataFolder = temporaryFolder.newFolder();
-        File localConfig = new File(dataFolder, "invisible_rules.yml");
-        File jarDemoConfig = new File(InvisibilityConfigTest.class.getResource("/invisible_rules.yml").toURI());
+        File localConfig = new File(dataFolder, "data.yml");
+        File jarDemoConfig = new File(InvisibilityConfigTest.class.getResource("/data.yml").toURI());
         Files.copy(jarDemoConfig, localConfig);
     }
 

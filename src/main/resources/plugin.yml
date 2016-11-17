@@ -18,7 +18,7 @@ commands:
        usage: '/hide <hider> <hiddenFrom...>'
     pvp:
        description: Toggles PVP on or off. PVP only works between two players with PVP enabled.
-       usage: '/pvp on | /pvp off'
+       usage: '/pvp on | /pvp off | /pvp on <player> | /pvp off <player>'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
