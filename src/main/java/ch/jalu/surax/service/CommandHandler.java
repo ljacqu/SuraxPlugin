@@ -3,10 +3,12 @@ package ch.jalu.surax.service;
 import ch.jalu.injector.Injector;
 import ch.jalu.surax.Permission;
 import ch.jalu.surax.commands.Command;
+import ch.jalu.surax.commands.FreezeCommand;
 import ch.jalu.surax.commands.HideCommand;
 import ch.jalu.surax.commands.HideMeCommand;
 import ch.jalu.surax.commands.NearHomeCommand;
 import ch.jalu.surax.commands.PvpCommand;
+import ch.jalu.surax.commands.UnfreezeCommand;
 import ch.jalu.surax.commands.UnhideMeCommand;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.command.CommandSender;
@@ -23,7 +25,8 @@ import java.util.Map;
 public class CommandHandler {
 
     public static final List<Class<? extends Command>> COMMAND_CLASSES = ImmutableList.of(
-        NearHomeCommand.class, HideCommand.class, HideMeCommand.class, UnhideMeCommand.class, PvpCommand.class);
+        NearHomeCommand.class, HideCommand.class, HideMeCommand.class, UnhideMeCommand.class, PvpCommand.class,
+        FreezeCommand.class, UnfreezeCommand.class);
     private Map<String, Command> commands = new HashMap<>();
 
     @Inject

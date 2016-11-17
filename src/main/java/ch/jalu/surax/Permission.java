@@ -15,7 +15,9 @@ public enum Permission {
 
     PVP_COMMAND("surax.pvp"),
 
-    PVP_OTHERS("surax.pvp.others");
+    PVP_OTHERS("surax.pvp.others"),
+
+    FREEZE_PLAYER("surax.freeze");
 
     private final String node;
 

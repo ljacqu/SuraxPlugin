@@ -19,6 +19,12 @@ commands:
     pvp:
        description: Toggles PVP on or off. PVP only works between two players with PVP enabled.
        usage: '/pvp on | /pvp off | /pvp on <player> | /pvp off <player>'
+    freeze:
+       description: Freezes a player (no movement or commands allowed)
+       usage: '/freeze <player>'
+    unfreeze:
+       description: Unfreeze a player
+       usage: '/unfreeze <player>'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes

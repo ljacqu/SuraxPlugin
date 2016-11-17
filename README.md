@@ -14,3 +14,9 @@
 
 - **/pvp**: Toggles PVP on or off. PVP only works between two players with PVP enabled.
     - Permission: surax.pvp
+
+- **/freeze**: Freezes a player (no movement or commands allowed)
+    - Permission: surax.freeze
+
+- **/unfreeze**: Unfreeze a player
+    - Permission: surax.freeze
