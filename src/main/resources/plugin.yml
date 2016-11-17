@@ -25,6 +25,12 @@ commands:
     unfreeze:
        description: Unfreeze a player
        usage: '/unfreeze <player>'
+    tdeop:
+       description: Allows a player to deop himself for a short time
+       usage: '/tdeop'
+    reop:
+       description: Allows a temporarily deopped player to reop himself manually
+       usage: '/reop'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -37,4 +43,13 @@ permissions:
          default: op
     surax.pvp:
          description: Usage of the /pvp command
+         default: op
+    surax.pvp.others:
+         description: Allows to manipulate other players with /pvp
+         default: op
+    surax.freeze:
+         description: Usage of the /freeze and /unfreeze commands
+         default: op
+    surax.tdeop:
+         description: Gives access to /tdeop and /reop
          default: op

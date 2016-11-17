@@ -26,9 +26,12 @@ public class GenerateReadme {
         FileConfiguration pluginYml = YamlConfiguration.loadConfiguration(
             GenerateReadme.class.getResourceAsStream("/plugin.yml"));
         for (Command command : commands) {
+            final String permission = command.getRequiredPermission() == null
+                ? "none"
+                : command.getRequiredPermission().getNode();
             result += "\n- **/" + command.getName() + "**: "
                 + pluginYml.get("commands." + command.getName() + ".description");
-            result += "\n    - Permission: " + command.getRequiredPermission().getNode();
+            result += "\n    - Permission: " + permission;
             result += "\n";
         }
 

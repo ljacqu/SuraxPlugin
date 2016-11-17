@@ -8,6 +8,8 @@ import ch.jalu.surax.commands.HideCommand;
 import ch.jalu.surax.commands.HideMeCommand;
 import ch.jalu.surax.commands.NearHomeCommand;
 import ch.jalu.surax.commands.PvpCommand;
+import ch.jalu.surax.commands.ReopCommand;
+import ch.jalu.surax.commands.TDeopCommand;
 import ch.jalu.surax.commands.UnfreezeCommand;
 import ch.jalu.surax.commands.UnhideMeCommand;
 import com.google.common.collect.ImmutableList;
@@ -26,7 +28,7 @@ public class CommandHandler {
 
     public static final List<Class<? extends Command>> COMMAND_CLASSES = ImmutableList.of(
         NearHomeCommand.class, HideCommand.class, HideMeCommand.class, UnhideMeCommand.class, PvpCommand.class,
-        FreezeCommand.class, UnfreezeCommand.class);
+        FreezeCommand.class, UnfreezeCommand.class, TDeopCommand.class, ReopCommand.class);
     private Map<String, Command> commands = new HashMap<>();
 
     @Inject

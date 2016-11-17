@@ -20,3 +20,9 @@
 
 - **/unfreeze**: Unfreeze a player
     - Permission: surax.freeze
+
+- **/tdeop**: Allows a player to deop himself for a short time
+    - Permission: surax.tdeop
+
+- **/reop**: Allows a temporarily deopped player to reop himself manually
+    - Permission: none
