@@ -30,13 +30,12 @@ public class TemporaryDeopManager {
     }
 
     public void tempDeopPlayer(Player player) {
+        Preconditions.checkArgument(player.isOp(), "Player '" + player.getName() + "' should be OP!");
         final String name = player.getName().toLowerCase();
-        if (temporarilyDeopped.containsKey(name)) {
-            logger.warning("Not temporarily deopping '" + player.getName() + "': entry already exists!");
-        } else {
-            Preconditions.checkArgument(player.isOp(), "Player '" + player.getName() + "' should be OP!");
-            player.setOp(false);
-            temporarilyDeopped.put(name, scheduleReopTask(name));
+        player.setOp(false);
+        BukkitRunnable previousTask = temporarilyDeopped.put(name, scheduleReopTask(name));
+        if (previousTask != null) {
+            previousTask.cancel();
         }
     }
 
@@ -74,8 +73,10 @@ public class TemporaryDeopManager {
         public void run() {
             Player player = Bukkit.getPlayerExact(name);
             if (player != null) {
-                player.setOp(true);
-                player.sendMessage("You are opped again!");
+                if (!player.isOp()) {
+                    player.setOp(true);
+                    player.sendMessage("You are opped again!");
+                }
             } else {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
                 if (offlinePlayer == null) {
