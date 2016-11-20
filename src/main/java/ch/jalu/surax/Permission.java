@@ -21,7 +21,9 @@ public enum Permission {
 
     TEMPORARY_DEOP("surax.tdeop"),
 
-    BAKE_ALL_COMMAND("surax.bakeall");
+    BAKE_ALL_COMMAND("surax.bakeall"),
+
+    FIXUP_COMMAND("surax.fixup");
 
     private final String node;
 

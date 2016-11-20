@@ -34,6 +34,9 @@ commands:
     bakeall:
        description: Turns all wheat of the player's inventory into bread
        usage: '/bakeall'
+    fixup:
+       description: Fix tools when possible
+       usage: '/fixall'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -58,4 +61,7 @@ permissions:
          default: op
     surax.bakeall:
          description: Gives access to /bakeall
+         default: true
+    surax.fixup:
+         description: Usage of /fixup
          default: true
