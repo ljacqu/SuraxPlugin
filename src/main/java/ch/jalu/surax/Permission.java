@@ -19,7 +19,9 @@ public enum Permission {
 
     FREEZE_PLAYER("surax.freeze"),
 
-    TEMPORARY_DEOP("surax.tdeop");
+    TEMPORARY_DEOP("surax.tdeop"),
+
+    BAKE_ALL_COMMAND("surax.bakeall");
 
     private final String node;
 

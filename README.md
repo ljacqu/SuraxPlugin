@@ -26,3 +26,6 @@
 
 - **/reop**: Allows a temporarily deopped player to reop himself manually
     - Permission: none
+
+- **/bakeall**: Turns all wheat of the player's inventory into bread
+    - Permission: surax.bakeall

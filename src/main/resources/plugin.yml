@@ -31,6 +31,9 @@ commands:
     reop:
        description: Allows a temporarily deopped player to reop himself manually
        usage: '/reop'
+    bakeall:
+       description: Turns all wheat of the player's inventory into bread
+       usage: '/bakeall'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -53,3 +56,6 @@ permissions:
     surax.tdeop:
          description: Gives access to /tdeop and /reop
          default: op
+    surax.bakeall:
+         description: Gives access to /bakeall
+         default: true
