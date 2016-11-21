@@ -13,30 +13,31 @@ import ch.jalu.surax.commands.PvpCommand;
 import ch.jalu.surax.commands.ReopCommand;
 import ch.jalu.surax.commands.TDeopCommand;
 import ch.jalu.surax.commands.UnfreezeCommand;
+import ch.jalu.surax.commands.UnhideCommand;
 import ch.jalu.surax.commands.UnhideMeCommand;
-import com.google.common.collect.ImmutableList;
 import org.bukkit.command.CommandSender;
 
 import javax.inject.Inject;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Handles incoming commands.
  */
 public class CommandHandler {
 
-    public static final List<Class<? extends Command>> COMMAND_CLASSES = ImmutableList.of(
-        NearHomeCommand.class, HideCommand.class, HideMeCommand.class, UnhideMeCommand.class, PvpCommand.class,
-        FreezeCommand.class, UnfreezeCommand.class, TDeopCommand.class, ReopCommand.class, BakeAllCommand.class,
-        FixupCommand.class);
-    private Map<String, Command> commands = new HashMap<>();
+    public static final List<Class<? extends Command>> COMMAND_CLASSES = Arrays.asList(
+        NearHomeCommand.class, HideCommand.class,   UnhideCommand.class,   HideMeCommand.class, UnhideMeCommand.class,
+        PvpCommand.class,      FreezeCommand.class, UnfreezeCommand.class, TDeopCommand.class,  ReopCommand.class,
+        BakeAllCommand.class,  FixupCommand.class);
+
+    private final Map<String, Command> commands;
 
     @Inject
     CommandHandler(Injector injector) {
-        initCommandMap(injector);
+        commands = initCommandMap(injector);
     }
 
     public boolean handleCommand(CommandSender sender, String label, String[] args) {
@@ -59,9 +60,9 @@ public class CommandHandler {
         }
     }
 
-    private void initCommandMap(Injector injector) {
-        COMMAND_CLASSES.stream()
+    private Map<String, Command> initCommandMap(Injector injector) {
+        return COMMAND_CLASSES.stream()
             .map(injector::getSingleton)
-            .forEach(cmd -> commands.put(cmd.getName(), cmd));
+            .collect(Collectors.toMap(Command::getName, cmd -> cmd));
     }
 }

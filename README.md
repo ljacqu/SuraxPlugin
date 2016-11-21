@@ -6,6 +6,9 @@
 - **/hide**: Hides a player from the given players
     - Permission: surax.hide
 
+- **/unhide**: Unhides a player from the given players
+    - Permission: surax.hide
+
 - **/hideme**: Hides a player from the supplied players
     - Permission: surax.hideme
 

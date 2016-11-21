@@ -16,6 +16,9 @@ commands:
     hide:
        description: Hides a player from the given players
        usage: '/hide <hider> <hiddenFrom...>'
+    unhide:
+       description: Unhides a player from the given players
+       usage: '/unhide <hider> <hiddenFrom...>'
     pvp:
        description: Toggles PVP on or off. PVP only works between two players with PVP enabled.
        usage: '/pvp on | /pvp off | /pvp on <player> | /pvp off <player>'

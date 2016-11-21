@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 import java.util.List;
 
+import static ch.jalu.surax.util.MessageUtils.outputList;
+
 /**
  * Implementation of the {@code /unhideme} command.
  */
@@ -29,11 +31,13 @@ public class UnhideMeCommand extends PlayerCommand {
     @Override
     public void execute(Player sender, List<String> arguments) {
         if (arguments.isEmpty()) {
-            sender.sendMessage("You are hidden from: " + config.getBlockedPlayers(sender.getName()));
+            outputList("You are hidden from", config.getBlockedPlayers(sender.getName()))
+                .orIfEmpty("You are hidden from no one")
+                .to(sender);
         } else {
             config.removeBlockedPlayer(sender.getName(), arguments);
             invisibilityManager.processUnhide(sender, arguments);
-            sender.sendMessage("You are now unhidden from players " + arguments);
+            sender.sendMessage("You are now unhidden from players " + String.join(", ", arguments));
         }
     }
 

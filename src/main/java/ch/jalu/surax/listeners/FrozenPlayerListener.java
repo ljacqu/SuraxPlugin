@@ -33,15 +33,15 @@ public class FrozenPlayerListener implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         if (freezeManager.isFrozen(event.getPlayer().getName())) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You have been frozen!");
+            event.getPlayer().sendMessage(ChatColor.RED + "You are frozen!");
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        if (freezeManager.isFrozen(event.getPlayer().getName())) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You have been frozen!");
+        if (freezeManager.isFrozen(event.getPlayer().getName()) && !event.getMessage().startsWith("/unfreeze")) {
+            event.getPlayer().sendMessage(ChatColor.RED + "You are frozen!");
             event.setCancelled(true);
         }
     }

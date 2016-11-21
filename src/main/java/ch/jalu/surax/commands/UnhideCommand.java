@@ -13,27 +13,27 @@ import java.util.List;
 import static ch.jalu.surax.util.MessageUtils.outputList;
 
 /**
- * Implementation for {@code /hide}.
+ * Implementation for {@code /unhide}.
  */
-public class HideCommand implements Command {
+public class UnhideCommand implements Command {
 
     @Inject
     private InvisibilityConfig config;
     @Inject
     private InvisibilityManager invisibilityManager;
 
-    HideCommand() {
+    UnhideCommand() {
     }
 
     @Override
     public String getName() {
-        return "hide";
+        return "unhide";
     }
 
     @Override
     public void execute(CommandSender sender, List<String> arguments) {
         if (arguments.size() < 1) {
-            sender.sendMessage("Need at least two arguments! E.g. /hide bobby clarence");
+            sender.sendMessage("Need at least two arguments! E.g. /unhide bobby clarence");
         } else if (arguments.size() == 1) {
             outputList("Player '" + arguments.get(0) + "' is hidden from", config.getBlockedPlayers(arguments.get(0)))
                 .orIfEmpty("Player '" + arguments.get(0) + "' is hidden from no one")
@@ -43,9 +43,9 @@ public class HideCommand implements Command {
             final List<String> hidees = arguments.subList(1, arguments.size());
             final Player player = Bukkit.getPlayer(hider);
 
-            config.addBlockedPlayer(sender.getName(), hidees);
-            invisibilityManager.processHide(player, hidees);
-            sender.sendMessage(hider + " is now hidden from " + String.join(", ", hidees));
+            config.removeBlockedPlayer(sender.getName(), hidees);
+            invisibilityManager.processUnhide(player, hidees);
+            sender.sendMessage(hider + " is no longer hidden from " + String.join(", ", hidees));
         }
     }
 

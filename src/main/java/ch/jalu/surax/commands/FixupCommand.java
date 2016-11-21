@@ -74,8 +74,10 @@ public class FixupCommand extends PlayerCommand {
         if (changedMaterials.isEmpty()) {
             player.sendMessage("Could not fix up any tools");
         } else {
-            player.sendMessage("Could fix tools: " + changedMaterials.stream()
-                .map(m -> m.name().toLowerCase()).collect(Collectors.joining(", ")));
+            player.sendMessage("Could fix tools: "
+                + changedMaterials.stream()
+                    .map(m -> m.name().toLowerCase().replace("_", " "))
+                    .collect(Collectors.joining(", ")));
         }
     }
 
