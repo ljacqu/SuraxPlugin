@@ -39,9 +39,7 @@ import static org.bukkit.Material.WOOD_SWORD;
 
 /**
  * Implementation for {@code /fixup}: groups broken tools of the same kind as can be done manually.
- * Only crafts tools together if no durability gets lost. Bonus of 5% as in a normal game is kept.
- *
- * @see <a href="http://minecraft.gamepedia.com/Tools#Crafting">Minecraft Wiki: Tools</a>
+ * Only crafts tools together if no durability gets lost.
  */
 public class FixupCommand extends PlayerCommand {
 

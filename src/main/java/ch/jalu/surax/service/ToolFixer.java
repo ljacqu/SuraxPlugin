@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 /**
  * Merges tools of the same type if the common durability doesn't exceed the max durability.
+ * Bonus of 5% as is given when done manually is also provided.
+ *
+ * @see <a href="http://minecraft.gamepedia.com/Item_repair">Minecraft Wiki: Item Repair</a>
  */
 public class ToolFixer {
 
@@ -73,7 +76,10 @@ public class ToolFixer {
 
 
     private ItemStack computeNewMaterial(Material material, int inverseDurabilitySum) {
-        short newDurability = (short) Math.max(material.getMaxDurability() - inverseDurabilitySum * 1.05, 0);
+        final short maxDurability = material.getMaxDurability();
+        final short newDurability =
+            (short) (maxDurability - Math.min(inverseDurabilitySum + maxDurability * 0.05, maxDurability));
+
         ItemStack item = new ItemStack(material);
         item.setDurability(newDurability);
         return item;

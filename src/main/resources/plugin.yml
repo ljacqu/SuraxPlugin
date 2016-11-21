@@ -35,7 +35,7 @@ commands:
        description: Turns all wheat of the player's inventory into bread
        usage: '/bakeall'
     fixup:
-       description: Fix tools when possible
+       description: Performs item repair (crafts broken tools together if no durability is lost)
        usage: '/fixall'
 permissions:
     surax.nearhome:

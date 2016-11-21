@@ -29,3 +29,6 @@
 
 - **/bakeall**: Turns all wheat of the player's inventory into bread
     - Permission: surax.bakeall
+
+- **/fixup**: Performs item repair (crafts broken tools together if no durability is lost)
+    - Permission: surax.fixup
