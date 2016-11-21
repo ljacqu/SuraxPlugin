@@ -40,6 +40,9 @@ commands:
     fixup:
        description: Performs item repair (crafts broken tools together if no durability is lost)
        usage: '/fixall'
+    glow:
+       description: Makes entities glow, or turns off their glow state
+       usage: '/glow <entity> <on/off>, e.g. /glow bat on'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -68,3 +71,6 @@ permissions:
     surax.fixup:
          description: Usage of /fixup
          default: true
+    surax.glow:
+         description: Usage of /glow
+         default: op

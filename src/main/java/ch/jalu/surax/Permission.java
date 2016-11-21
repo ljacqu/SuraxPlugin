@@ -23,7 +23,9 @@ public enum Permission {
 
     BAKE_ALL_COMMAND("surax.bakeall"),
 
-    FIXUP_COMMAND("surax.fixup");
+    FIXUP_COMMAND("surax.fixup"),
+
+    GLOW_COMMAND("surax.glow");
 
     private final String node;
 
