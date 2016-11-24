@@ -3,7 +3,9 @@ package ch.jalu.surax.commands;
 import ch.jalu.surax.Permission;
 import org.bukkit.World;
 import org.bukkit.entity.Bat;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -25,7 +27,6 @@ public class GlowCommand extends PlayerCommand {
         return "glow";
     }
 
-    @Nullable
     @Override
     public Permission getRequiredPermission() {
         return Permission.GLOW_COMMAND;
@@ -33,29 +34,43 @@ public class GlowCommand extends PlayerCommand {
 
     @Override
     protected void execute(Player player, List<String> arguments) {
-        if (arguments.size() != 2) {
-            player.sendMessage("Usage: /glow bat on, or /glow zombie off");
+        if (arguments.size() < 1) {
+            player.sendMessage("Usage: /glow bat, or /glow zombie off");
             return;
         }
 
-        EntityType type = toEntityType(arguments.get(0));
-        if (type == null) {
+        GlowParemeter parameters = stringToGlowParameter(arguments.get(0));
+        if (parameters == null) {
             player.sendMessage("Unknown entity type! Do /glow for examples");
             return;
         }
 
         final World world = player.getWorld();
-        if ("on".equalsIgnoreCase(arguments.get(1))) {
-            world.getEntitiesByClass(type.getEntityClass())
-                .forEach(e -> e.setGlowing(true));
-            player.sendMessage("All entities of type " + formatType(type) + " are now glowing");
+        if (arguments.size() < 2 || "on".equalsIgnoreCase(arguments.get(1))) {
+            world.getEntitiesByClass(parameters.entityClass).forEach(e -> e.setGlowing(true));
+            player.sendMessage("All " + parameters.type + " entities are now glowing");
         } else if ("off".equalsIgnoreCase(arguments.get(1))) {
-            world.getEntitiesByClass(type.getEntityClass())
-                .forEach(e -> e.setGlowing(false));
-            player.sendMessage("All entities of type " + formatType(type) + " are no longer glowing");
+            world.getEntitiesByClass(parameters.entityClass).forEach(e -> e.setGlowing(false));
+            player.sendMessage("All " + parameters.type + " entities are no longer glowing");
         } else {
             player.sendMessage("Unknown state! Use e.g. /glow zombie off or /glow zombie on");
         }
+    }
+
+    @Nullable
+    private GlowParemeter stringToGlowParameter(String type) {
+        if ("all".equalsIgnoreCase(type)) {
+            return new GlowParemeter("", Entity.class);
+        } else if ("monster".equalsIgnoreCase(type)) {
+            return new GlowParemeter("monster", Monster.class);
+        } else {
+            EntityType entityType = toEntityType(type);
+            if (entityType != null) {
+                return new GlowParemeter(formatType(entityType), entityType.getEntityClass());
+            }
+        }
+
+        return null;
     }
 
     private static String formatType(EntityType type) {
@@ -70,5 +85,15 @@ public class GlowCommand extends PlayerCommand {
             }
         }
         return null;
+    }
+
+    private static final class GlowParemeter {
+        private String type;
+        private Class<? extends Entity> entityClass;
+
+        GlowParemeter(String type, Class<? extends Entity> entityClass) {
+            this.type = type;
+            this.entityClass = entityClass;
+        }
     }
 }
