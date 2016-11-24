@@ -43,10 +43,13 @@ commands:
     glow:
        description: Makes entities glow, or turns off their glow state
        usage: '/glow <entity> <on/off>, e.g. /glow bat on'
+    autosow:
+       description: Toggles the auto-sow feature (walked on soil is automatically sown)
+       usage: '/autosow'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
-         default: op
+         default: true
     surax.hideme:
          description: Usage of the /hideme and /unhideme command
          default: op
@@ -55,7 +58,7 @@ permissions:
          default: op
     surax.pvp:
          description: Usage of the /pvp command
-         default: op
+         default: true
     surax.pvp.others:
          description: Allows to manipulate other players with /pvp
          default: op
@@ -74,3 +77,6 @@ permissions:
     surax.glow:
          description: Usage of /glow
          default: op
+    surax.autosow:
+         description: Usage of /autosow
+         default: true

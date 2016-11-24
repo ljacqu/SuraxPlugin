@@ -39,7 +39,7 @@ public class GlowCommand extends PlayerCommand {
             return;
         }
 
-        GlowParemeter parameters = stringToGlowParameter(arguments.get(0));
+        GlowParameter parameters = stringToGlowParameter(arguments.get(0));
         if (parameters == null) {
             player.sendMessage("Unknown entity type! Do /glow for examples");
             return;
@@ -58,15 +58,15 @@ public class GlowCommand extends PlayerCommand {
     }
 
     @Nullable
-    private GlowParemeter stringToGlowParameter(String type) {
+    private GlowParameter stringToGlowParameter(String type) {
         if ("all".equalsIgnoreCase(type)) {
-            return new GlowParemeter("", Entity.class);
+            return new GlowParameter("", Entity.class);
         } else if ("monster".equalsIgnoreCase(type)) {
-            return new GlowParemeter("monster", Monster.class);
+            return new GlowParameter("monster", Monster.class);
         } else {
             EntityType entityType = toEntityType(type);
             if (entityType != null) {
-                return new GlowParemeter(formatType(entityType), entityType.getEntityClass());
+                return new GlowParameter(formatType(entityType), entityType.getEntityClass());
             }
         }
 
@@ -87,11 +87,11 @@ public class GlowCommand extends PlayerCommand {
         return null;
     }
 
-    private static final class GlowParemeter {
+    private static final class GlowParameter {
         private String type;
         private Class<? extends Entity> entityClass;
 
-        GlowParemeter(String type, Class<? extends Entity> entityClass) {
+        GlowParameter(String type, Class<? extends Entity> entityClass) {
             this.type = type;
             this.entityClass = entityClass;
         }

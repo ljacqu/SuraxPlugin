@@ -2,6 +2,7 @@ package ch.jalu.surax.service;
 
 import ch.jalu.injector.Injector;
 import ch.jalu.surax.Permission;
+import ch.jalu.surax.commands.AutoSowCommand;
 import ch.jalu.surax.commands.BakeAllCommand;
 import ch.jalu.surax.commands.Command;
 import ch.jalu.surax.commands.FixupCommand;
@@ -32,7 +33,7 @@ public class CommandHandler {
     public static final List<Class<? extends Command>> COMMAND_CLASSES = Arrays.asList(
         NearHomeCommand.class, HideCommand.class,   UnhideCommand.class,   HideMeCommand.class, UnhideMeCommand.class,
         PvpCommand.class,      FreezeCommand.class, UnfreezeCommand.class, TDeopCommand.class,  ReopCommand.class,
-        BakeAllCommand.class,  FixupCommand.class,  GlowCommand.class);
+        BakeAllCommand.class,  FixupCommand.class,  GlowCommand.class,     AutoSowCommand.class);
 
     private final Map<String, Command> commands;
 

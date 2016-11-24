@@ -25,7 +25,9 @@ public enum Permission {
 
     FIXUP_COMMAND("surax.fixup"),
 
-    GLOW_COMMAND("surax.glow");
+    GLOW_COMMAND("surax.glow"),
+
+    AUTO_SOW("surax.autosow");
 
     private final String node;
 
