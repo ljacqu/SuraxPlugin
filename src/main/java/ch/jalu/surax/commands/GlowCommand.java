@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 
+import static ch.jalu.surax.util.MessageUtils.formatEnum;
+
 /**
  * Implementation of {@code /glow}.
  */
@@ -66,15 +68,11 @@ public class GlowCommand extends PlayerCommand {
         } else {
             EntityType entityType = toEntityType(type);
             if (entityType != null) {
-                return new GlowParameter(formatType(entityType), entityType.getEntityClass());
+                return new GlowParameter(formatEnum(entityType), entityType.getEntityClass());
             }
         }
 
         return null;
-    }
-
-    private static String formatType(EntityType type) {
-        return type.name().toLowerCase().replace("_", " ");
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package ch.jalu.surax.commands;
 
 import ch.jalu.surax.Permission;
 import ch.jalu.surax.service.ToolFixer;
+import ch.jalu.surax.util.MessageUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -76,7 +77,7 @@ public class FixupCommand extends PlayerCommand {
         } else {
             player.sendMessage("Could fix tools: "
                 + changedMaterials.stream()
-                    .map(m -> m.name().toLowerCase().replace("_", " "))
+                    .map(MessageUtils::formatEnum)
                     .collect(Collectors.joining(", ")));
         }
     }

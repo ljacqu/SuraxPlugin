@@ -52,7 +52,7 @@ public class ToolFixer {
                     newItems.add(computeNewMaterial(material, curInverseDurabilitySum));
                     slotsToDelete.addAll(currentSlots);
 
-                    curInverseDurabilitySum = entry.getValue().getDurability();
+                    curInverseDurabilitySum = (short) (maxDurability - entry.getValue().getDurability());
                     currentSlots.clear();
                     currentSlots.add(entry.getKey());
                 } else {
@@ -62,7 +62,7 @@ public class ToolFixer {
                 }
             }
         }
-        if (currentSlots.size() > 1) {
+        if (curInverseDurabilitySum <= maxDurability && currentSlots.size() > 1) {
             newItems.add(computeNewMaterial(material, curInverseDurabilitySum));
             slotsToDelete.addAll(currentSlots);
         }
