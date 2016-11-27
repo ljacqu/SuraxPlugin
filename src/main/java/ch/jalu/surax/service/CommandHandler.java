@@ -5,6 +5,7 @@ import ch.jalu.surax.Permission;
 import ch.jalu.surax.commands.AutoSowCommand;
 import ch.jalu.surax.commands.BakeAllCommand;
 import ch.jalu.surax.commands.Command;
+import ch.jalu.surax.commands.CraftCommand;
 import ch.jalu.surax.commands.FixupCommand;
 import ch.jalu.surax.commands.FreezeCommand;
 import ch.jalu.surax.commands.GlowCommand;
@@ -33,7 +34,7 @@ public class CommandHandler {
     public static final List<Class<? extends Command>> COMMAND_CLASSES = Arrays.asList(
         NearHomeCommand.class, HideCommand.class,   UnhideCommand.class,   HideMeCommand.class, UnhideMeCommand.class,
         PvpCommand.class,      FreezeCommand.class, UnfreezeCommand.class, TDeopCommand.class,  ReopCommand.class,
-        BakeAllCommand.class,  FixupCommand.class,  GlowCommand.class,     AutoSowCommand.class);
+        BakeAllCommand.class,  FixupCommand.class,  GlowCommand.class,     AutoSowCommand.class, CraftCommand.class);
 
     private final Map<String, Command> commands;
 

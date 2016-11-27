@@ -4,6 +4,7 @@ import ch.jalu.injector.Injector;
 import ch.jalu.injector.InjectorBuilder;
 import ch.jalu.surax.config.PersistenceFileLoader;
 import ch.jalu.surax.domain.DataFolder;
+import ch.jalu.surax.domain.ToolRecipe;
 import ch.jalu.surax.listeners.AutoSowListener;
 import ch.jalu.surax.listeners.FrozenPlayerListener;
 import ch.jalu.surax.listeners.InvisibilityListener;
@@ -30,6 +31,8 @@ public class SuraxPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        ToolRecipe.init();
+
         Injector injector = new InjectorBuilder()
             .addDefaultHandlers("ch.jalu.surax")
             .create();

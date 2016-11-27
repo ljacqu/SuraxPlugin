@@ -46,6 +46,9 @@ commands:
     autosow:
        description: Toggles the auto-sow feature (walked on soil is automatically sown)
        usage: '/autosow'
+    craft:
+       description: Crafts the selected tool
+       usage: '/craft'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -79,4 +82,7 @@ permissions:
          default: op
     surax.autosow:
          description: Usage of /autosow
+         default: true
+    surax.craft:
+         description: Usage of /craft
          default: true
