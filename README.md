@@ -16,6 +16,9 @@
 - **/autosow**: Toggles the auto-sow feature (walked on soil is automatically sown)
     - Permission: surax.autosow
 
+- **/craft**: Crafts the selected tool
+    - Permission: surax.craft
+
 #### Admin Commands
 - **/hide**: Hides a player from the given players
     - Permission: surax.hide
@@ -56,3 +59,4 @@
 - surax.fixup: Usage of /fixup
 - surax.glow: Usage of /glow
 - surax.autosow: Usage of /autosow
+- surax.craft: Usage of /craft

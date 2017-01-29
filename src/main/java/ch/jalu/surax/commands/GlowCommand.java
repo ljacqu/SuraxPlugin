@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 
+import static ch.jalu.surax.util.EnumUtil.toEnum;
 import static ch.jalu.surax.util.MessageUtils.formatEnum;
 
 /**
@@ -66,22 +67,12 @@ public class GlowCommand extends PlayerCommand {
         } else if ("monster".equalsIgnoreCase(type)) {
             return new GlowParameter("monster", Monster.class);
         } else {
-            EntityType entityType = toEntityType(type);
+            EntityType entityType = toEnum(EntityType.class, type);
             if (entityType != null) {
                 return new GlowParameter(formatEnum(entityType), entityType.getEntityClass());
             }
         }
 
-        return null;
-    }
-
-    @Nullable
-    private static EntityType toEntityType(String str) {
-        for (EntityType type : EntityType.values()) {
-            if (str.equalsIgnoreCase(type.name())) {
-                return type;
-            }
-        }
         return null;
     }
 
