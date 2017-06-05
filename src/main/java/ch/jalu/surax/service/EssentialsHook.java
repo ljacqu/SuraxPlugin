@@ -10,7 +10,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.logging.Logger;
 /**
  * Hooks into Essentials.
  */
-public class EssentialsHook {
+public class EssentialsHook extends AbstractPluginHook {
 
     @Inject
     private PluginManager pluginManager;
@@ -29,25 +28,23 @@ public class EssentialsHook {
     private boolean isHooked;
     private Essentials essentials;
 
-    @PostConstruct
-    public void hook() {
-        if (!isEssentialsClassLoaded()) {
-            logger.info("Essentials class not loaded - hook process aborted");
-            return;
-        }
-
-        Plugin plugin = pluginManager.getPlugin("Essentials");
-        if (plugin instanceof Essentials) {
-            essentials = (Essentials) plugin;
-            isHooked = true;
-            logger.info("Hooked into Essentials " + essentials.getDescription().getVersion());
-        } else if (plugin != null) {
-            logger.warning("Essentials plugin is of unexpected type '" + plugin.getClass() + "'");
-        } else {
-            logger.info("Could not hook into Essentials - unavailable");
-        }
+    @Override
+    protected String getPluginClass() {
+        return "com.earth2me.essentials.Essentials";
     }
 
+    @Override
+    protected String getPluginName() {
+        return "Essentials";
+    }
+
+    @Override
+    protected void acceptPlugin(Plugin plugin) {
+        essentials = (Essentials) plugin;
+        isHooked = true;
+    }
+
+    @Override
     public void unhook() {
         essentials = null;
         isHooked = false;
@@ -106,14 +103,5 @@ public class EssentialsHook {
             // silent
         }
         return null;
-    }
-
-    private static boolean isEssentialsClassLoaded() {
-        try {
-            Class.forName("com.earth2me.essentials.Essentials");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
     }
 }

@@ -1,8 +1,9 @@
 name: SuraxPlugin
 main: ch.jalu.surax.SuraxPlugin
-version: 1.0
+version: 0.2
 softdepend:
     - Essentials
+    - WorldGuard
 commands:
     nearhome:
         description: Finds your homes nearest to you

@@ -11,6 +11,7 @@ import ch.jalu.surax.listeners.FrozenPlayerListener;
 import ch.jalu.surax.listeners.InvisibilityListener;
 import ch.jalu.surax.listeners.PvpListener;
 import ch.jalu.surax.listeners.ServerListener;
+import ch.jalu.surax.listeners.WorldGuardListener;
 import ch.jalu.surax.service.CommandHandler;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -48,7 +49,7 @@ public class SuraxPlugin extends JavaPlugin {
         persistenceFileLoader = injector.getSingleton(PersistenceFileLoader.class);
 
         registerListeners(injector, ServerListener.class, InvisibilityListener.class, PvpListener.class,
-            FrozenPlayerListener.class, AutoSowListener.class, EntityTargetListener.class);
+            FrozenPlayerListener.class, AutoSowListener.class, EntityTargetListener.class, WorldGuardListener.class);
     }
 
     @Override

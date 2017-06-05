@@ -29,7 +29,9 @@ public enum Permission {
 
     AUTO_SOW("surax.autosow"),
 
-    CRAFT_COMMAND("surax.craft");
+    CRAFT_COMMAND("surax.craft"),
+
+    RELOAD_COMMAND("surax.reload");
 
     private final String node;
 
