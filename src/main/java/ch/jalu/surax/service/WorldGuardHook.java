@@ -23,15 +23,10 @@ public class WorldGuardHook extends AbstractPluginHook {
     @Inject
     private Logger logger;
 
-    private WorldGuardPlugin worldGuard;
-    private ProtectedRegion noTpRegion;
+    private IWorldGuardHandler handler = new IWorldGuardHandler() {};
 
     public boolean isInProtectedRegion(Location location) {
-        if (worldGuard != null) {
-            ProtectedRegion region = getRegion();
-            return region != null && region.contains(BukkitUtil.toVector(location));
-        }
-        return false;
+        return handler.isInProtectedRegion(location);
     }
 
     @Override
@@ -40,37 +35,61 @@ public class WorldGuardHook extends AbstractPluginHook {
     }
 
     @Override
-    protected String getPluginName() {
+    public String getPluginName() {
         return "WorldGuard";
     }
 
     @Override
     protected void acceptPlugin(Plugin plugin) {
-        worldGuard = (WorldGuardPlugin) plugin;
+        handler = new WorldGuardHandler((WorldGuardPlugin) plugin, logger);
     }
 
     @Override
     public void unhook() {
-        worldGuard = null;
+        handler = new IWorldGuardHandler() {};
     }
 
-    @Nullable
-    private ProtectedRegion getRegion() {
-        if (noTpRegion != null) {
-            return noTpRegion;
-        } else if (worldGuard == null) {
-            return null;
+    private interface IWorldGuardHandler {
+        default boolean isInProtectedRegion(Location location) {
+            return false;
+        }
+    }
+
+    private static final class WorldGuardHandler implements IWorldGuardHandler {
+
+        private final WorldGuardPlugin worldGuard;
+        private final Logger logger;
+        private ProtectedRegion noTpRegion;
+
+        WorldGuardHandler(WorldGuardPlugin worldGuard, Logger logger) {
+            this.worldGuard = worldGuard;
+            this.logger = logger;
         }
 
-        RegionManager regions = worldGuard.getRegionContainer().get(Bukkit.getWorld(WORLD_NAME));
-        if (regions != null) {
-            noTpRegion = regions.getRegion(REGION_NAME);
-            if (noTpRegion == null) {
-                logger.warning("Could not get region '" + REGION_NAME + "' from WorldGuard");
-            }
-            return noTpRegion;
+        @Override
+        public boolean isInProtectedRegion(Location location) {
+            ProtectedRegion region = getRegion();
+            return region != null && region.contains(BukkitUtil.toVector(location));
         }
-        logger.warning("Could not get regions in '" + WORLD_NAME + "' from WorldGuard");
-        return null;
+
+        @Nullable
+        private ProtectedRegion getRegion() {
+            if (noTpRegion != null) {
+                return noTpRegion;
+            } else if (worldGuard == null) {
+                return null;
+            }
+
+            RegionManager regions = worldGuard.getRegionContainer().get(Bukkit.getWorld(WORLD_NAME));
+            if (regions != null) {
+                noTpRegion = regions.getRegion(REGION_NAME);
+                if (noTpRegion == null) {
+                    logger.warning("Could not get region '" + REGION_NAME + "' from WorldGuard");
+                }
+                return noTpRegion;
+            }
+            logger.warning("Could not get regions in '" + WORLD_NAME + "' from WorldGuard");
+            return null;
+        }
     }
 }
