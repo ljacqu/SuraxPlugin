@@ -9,7 +9,7 @@
     <version>0.2-SNAPSHOT</version>
     <properties>
         <!-- Spigot version -->
-        <spigot.version>1.10-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.11.2-R0.1-SNAPSHOT</spigot.version>
         <!-- Project encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -71,6 +71,11 @@
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
+
+        <repository>
+            <id>chestshop-repo</id>
+            <url>https://repo.minebench.de/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -110,6 +115,14 @@
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>6.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ChestShop -->
+        <dependency>
+            <groupId>com.acrobot.chestshop</groupId>
+            <artifactId>chestshop</artifactId>
+            <version>3.8.13-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 

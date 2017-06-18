@@ -9,6 +9,7 @@ import ch.jalu.surax.listeners.FrozenPlayerListener;
 import ch.jalu.surax.listeners.InvisibilityListener;
 import ch.jalu.surax.listeners.PlayerListener;
 import ch.jalu.surax.listeners.ServerListener;
+import ch.jalu.surax.service.ChestShopHook;
 import ch.jalu.surax.service.CommandHandler;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -41,6 +42,7 @@ public class SuraxPlugin extends JavaPlugin {
         injector.register(Server.class, getServer());
         injector.register(PluginManager.class, getServer().getPluginManager());
         injector.provide(DataFolder.class, getDataFolder());
+        injector.getSingleton(ChestShopHook.class); // trigger instantiation
 
         commandHandler = injector.getSingleton(CommandHandler.class);
         persistenceFileLoader = injector.getSingleton(PersistenceFileLoader.class);
