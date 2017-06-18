@@ -33,7 +33,7 @@ public abstract class AbstractPluginHook implements Reloadable {
         final Plugin plugin = pluginManager.getPlugin(getPluginName());
         if (pluginClass.isInstance(plugin)) {
             acceptPlugin(plugin);
-            logger.info("Found " + pluginName + " " + plugin.getDescription().getVersion());
+            logger.info("Detected " + pluginName + " " + plugin.getDescription().getVersion());
         } else if (plugin != null) {
             logger.warning("Plugin '" + pluginName + "' is of unexpected type '" + plugin.getClass() + "'");
         } else {

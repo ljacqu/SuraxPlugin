@@ -50,6 +50,9 @@ commands:
     craft:
        description: Crafts the selected tool
        usage: '/craft'
+    suraxreload:
+       description: Reloads the Surax plugin
+       usage: '/suraxreload'
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
@@ -89,3 +92,4 @@ permissions:
          default: op
     surax.worldguard.allowtp:
          description: Allow to teleport
+         default: op
