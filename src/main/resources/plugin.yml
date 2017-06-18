@@ -53,7 +53,7 @@ commands:
 permissions:
     surax.nearhome:
          description: Usage of /nearhome to see one's own homes
-         default: true
+         default: op
     surax.hideme:
          description: Usage of the /hideme and /unhideme command
          default: op
@@ -62,7 +62,7 @@ permissions:
          default: op
     surax.pvp:
          description: Usage of the /pvp command
-         default: true
+         default: op
     surax.pvp.others:
          description: Allows to manipulate other players with /pvp
          default: op
@@ -74,16 +74,18 @@ permissions:
          default: op
     surax.bakeall:
          description: Gives access to /bakeall
-         default: true
+         default: op
     surax.fixup:
          description: Usage of /fixup
-         default: true
+         default: op
     surax.glow:
          description: Usage of /glow
          default: op
     surax.autosow:
          description: Usage of /autosow
-         default: true
+         default: op
     surax.craft:
          description: Usage of /craft
-         default: true
+         default: op
+    surax.worldguard.allowtp:
+         description: Allow to teleport

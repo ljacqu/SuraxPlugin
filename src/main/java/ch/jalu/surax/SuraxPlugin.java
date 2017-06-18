@@ -5,13 +5,10 @@ import ch.jalu.injector.InjectorBuilder;
 import ch.jalu.surax.config.PersistenceFileLoader;
 import ch.jalu.surax.domain.DataFolder;
 import ch.jalu.surax.domain.ToolRecipe;
-import ch.jalu.surax.listeners.AutoSowListener;
-import ch.jalu.surax.listeners.EntityTargetListener;
 import ch.jalu.surax.listeners.FrozenPlayerListener;
 import ch.jalu.surax.listeners.InvisibilityListener;
-import ch.jalu.surax.listeners.PvpListener;
+import ch.jalu.surax.listeners.PlayerListener;
 import ch.jalu.surax.listeners.ServerListener;
-import ch.jalu.surax.listeners.WorldGuardListener;
 import ch.jalu.surax.service.CommandHandler;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -48,8 +45,8 @@ public class SuraxPlugin extends JavaPlugin {
         commandHandler = injector.getSingleton(CommandHandler.class);
         persistenceFileLoader = injector.getSingleton(PersistenceFileLoader.class);
 
-        registerListeners(injector, ServerListener.class, InvisibilityListener.class, PvpListener.class,
-            FrozenPlayerListener.class, AutoSowListener.class, EntityTargetListener.class, WorldGuardListener.class);
+        registerListeners(injector,
+            ServerListener.class, InvisibilityListener.class, FrozenPlayerListener.class, PlayerListener.class);
     }
 
     @Override
@@ -69,6 +66,4 @@ public class SuraxPlugin extends JavaPlugin {
             .map(injector::getSingleton)
             .forEach(l -> pluginManager.registerEvents(l, this));
     }
-
-
 }

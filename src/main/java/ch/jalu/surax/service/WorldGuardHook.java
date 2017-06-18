@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class WorldGuardHook extends AbstractPluginHook {
 
     private static final String WORLD_NAME = "world";
-    private static final String REGION_NAME = "spawn_market_entrance";
+    private static final String REGION_NAME = "spawn_underground";
 
     @Inject
     private Logger logger;
@@ -76,8 +76,6 @@ public class WorldGuardHook extends AbstractPluginHook {
         private ProtectedRegion getRegion() {
             if (noTpRegion != null) {
                 return noTpRegion;
-            } else if (worldGuard == null) {
-                return null;
             }
 
             RegionManager regions = worldGuard.getRegionContainer().get(Bukkit.getWorld(WORLD_NAME));

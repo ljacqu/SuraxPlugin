@@ -31,6 +31,8 @@ public enum Permission {
 
     CRAFT_COMMAND("surax.craft"),
 
+    WORLDGUARD_TP_BLOCK_OVERRIDE("surax.worldguard.allowtp"),
+
     RELOAD_COMMAND("surax.reload");
 
     private final String node;
