@@ -8,22 +8,22 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+
+import static ch.jalu.surax.util.Utils.passWithProbability;
 
 /**
  * Keeps track of players placing items at forbidden heights.
  */
 public class ForbiddenBlocksManager {
 
+    // TODO: Move to DrugService
     private static final EnumSet FORBIDDEN_ITEMS = EnumSet.of(Material.SUGAR_CANE_BLOCK, Material.CACTUS);
     private static final int MIN_Y_COORD = 50;
     private static final String JAIL_COMMAND = "jail %p jail3 1min";
 
     private final Set<UUID> alertedPlayers = new HashSet<>();
-    private final Random random = new Random();
-
 
     public void handleEvent(BlockPlaceEvent event) {
         if (FORBIDDEN_ITEMS.contains(event.getBlock().getType()) && MIN_Y_COORD < event.getBlock().getY()) {
@@ -33,14 +33,13 @@ public class ForbiddenBlocksManager {
     }
 
     private void handleBlockViolation(Player player) {
-        int randId = 0;
+        boolean isFirstTimeAlerted = false;
         if (!alertedPlayers.contains(player.getUniqueId())) {
             alertedPlayers.add(player.getUniqueId());
-        } else {
-            randId = random.nextInt(4);
+            isFirstTimeAlerted = true;
         }
 
-        if (randId == 1) {
+        if (!isFirstTimeAlerted && passWithProbability(25)) {
             player.sendMessage(ChatColor.RED
                 + "You've been jailed: don't place drug plants above Y coordinate " + MIN_Y_COORD + "!");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), JAIL_COMMAND.replace("%p", player.getName()));

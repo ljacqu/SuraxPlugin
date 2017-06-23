@@ -5,6 +5,7 @@ import ch.jalu.injector.InjectorBuilder;
 import ch.jalu.surax.config.PersistenceFileLoader;
 import ch.jalu.surax.domain.DataFolder;
 import ch.jalu.surax.domain.ToolRecipe;
+import ch.jalu.surax.listeners.EntityListener;
 import ch.jalu.surax.listeners.FrozenPlayerListener;
 import ch.jalu.surax.listeners.InvisibilityListener;
 import ch.jalu.surax.listeners.PlayerListener;
@@ -47,7 +48,7 @@ public class SuraxPlugin extends JavaPlugin {
         commandHandler = injector.getSingleton(CommandHandler.class);
         persistenceFileLoader = injector.getSingleton(PersistenceFileLoader.class);
 
-        registerListeners(injector,
+        registerListeners(injector, EntityListener.class,
             ServerListener.class, InvisibilityListener.class, FrozenPlayerListener.class, PlayerListener.class);
     }
 

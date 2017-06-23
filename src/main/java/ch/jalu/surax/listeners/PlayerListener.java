@@ -4,16 +4,14 @@ import ch.jalu.surax.Permission;
 import ch.jalu.surax.config.PvpStorage;
 import ch.jalu.surax.config.UntargetRules;
 import ch.jalu.surax.service.AutoSowService;
+import ch.jalu.surax.service.DrugItemsService;
 import ch.jalu.surax.service.ForbiddenBlocksManager;
 import ch.jalu.surax.service.WorldGuardHook;
 import com.google.common.collect.ImmutableSet;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -22,15 +20,11 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.PlayerInventory;
 
 import javax.inject.Inject;
-import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static java.lang.String.valueOf;
 import static org.bukkit.event.entity.EntityTargetEvent.TargetReason.CLOSEST_ENTITY;
 import static org.bukkit.event.entity.EntityTargetEvent.TargetReason.CLOSEST_PLAYER;
 import static org.bukkit.event.entity.EntityTargetEvent.TargetReason.CUSTOM;
@@ -59,9 +53,9 @@ public class PlayerListener implements Listener {
     @Inject
     private ForbiddenBlocksManager forbiddenBlocksManager;
     @Inject
+    private DrugItemsService drugItemsService;
+    @Inject
     private Logger logger;
-
-    private Random random = new Random();
 
     @EventHandler
     public void onMobTarget(EntityTargetEvent event) {
@@ -75,24 +69,6 @@ public class PlayerListener implements Listener {
         }
     }
 
-    private void removeIllegalItems(Inventory inventory) {
-        inventory.remove(Material.SUGAR);
-        inventory.remove(Material.MUSHROOM_SOUP);
-        // TODO cactus green
-    }
-
-    private void jailPlayer(Player player) {
-        int seconds = 30 + random.nextInt(90);
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-            "jail %p jail1 %ssec".replace("%p", player.getName()).replace("%s", valueOf(seconds)));
-        player.sendMessage(ChatColor.RED + "Illegal items have been found in your inventory! You are now in jail");
-    }
-
-    private void warnAndTeleportPlayer(Player player) {
-        player.sendMessage(ChatColor.RED + "Illegal items have been found in your inventory! You have been kicked out!");
-        Bukkit.dispatchCommand(player, "spawn");
-    }
-
     @EventHandler
     public void onPvp(EntityDamageByEntityEvent event) {
         final Player damagedPlayer = event.getEntity() instanceof Player ? (Player) event.getEntity() : null;
@@ -102,21 +78,8 @@ public class PlayerListener implements Listener {
                 event.getDamager().sendMessage("PVP is disabled for you or the target");
                 event.setCancelled(true);
             }
-        }
-
-        if (event.getDamager() instanceof Zombie
-            && damagedPlayer != null
-            && worldGuardHook.isInProtectedRegion(damagedPlayer.getLocation())) {
-            final PlayerInventory inv = damagedPlayer.getInventory();
-            if (inv.contains(Material.SUGAR) || inv.contains(Material.MUSHROOM_SOUP)) { // TODO cactus green
-                switch (random.nextInt(4)) {
-                    case 0: warnAndTeleportPlayer(damagedPlayer); break;
-                    case 1: removeIllegalItems(inv); // fall through
-                    case 2: jailPlayer(damagedPlayer); break;
-                    case 3: /* noop */ break;
-                    default: logger.warning("Unexpected random int during zombie inspection");
-                }
-            }
+        } else if (damagedPlayer != null && drugItemsService.isEnforcerZombie(event.getDamager())) {
+            drugItemsService.processIfHasDrugItems(damagedPlayer);
         }
     }
 

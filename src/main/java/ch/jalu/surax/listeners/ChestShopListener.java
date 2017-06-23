@@ -10,15 +10,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import javax.inject.Inject;
-import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import static ch.jalu.surax.util.Utils.passWithProbability;
 
 /**
  * Listener of ChestShop events.
  */
 public class ChestShopListener implements Listener {
 
+    // TODO: Move to DrugItemsService
     private static final Set<String> FORBIDDEN_ITEM_NAMES = ImmutableSet.of(
         "Sugar Cane", "Sugar", "Mushroom Stew", "Red Mushroom", "Brown Mushroom", "Green Ink Sack"
     );
@@ -28,8 +30,6 @@ public class ChestShopListener implements Listener {
     @Inject
     private Logger logger;
 
-    private Random random = new Random();
-
     @EventHandler
     public void onShopCreate(PreShopCreationEvent event) {
         final String itemLine = event.getSignLines()[3];
@@ -37,7 +37,7 @@ public class ChestShopListener implements Listener {
             event.setOutcome(PreShopCreationEvent.CreationOutcome.INVALID_ITEM);
             final Player player = event.getPlayer();
             player.sendMessage(ChatColor.RED + "You may not create shops with drug items out in the open! See /info underground");
-            if (random.nextInt(4) == 1) {
+            if (passWithProbability(33)) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
                     "jail %p jail2 1min".replace("%p", player.getName()));
             }
