@@ -4,8 +4,6 @@ import ch.jalu.surax.Permission;
 import ch.jalu.surax.config.PvpStorage;
 import ch.jalu.surax.config.UntargetRules;
 import ch.jalu.surax.service.AutoSowService;
-import ch.jalu.surax.service.DrugItemsService;
-import ch.jalu.surax.service.ForbiddenBlocksManager;
 import ch.jalu.surax.service.WorldGuardHook;
 import com.google.common.collect.ImmutableSet;
 import org.bukkit.ChatColor;
@@ -14,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
@@ -51,10 +48,6 @@ public class PlayerListener implements Listener {
     @Inject
     private WorldGuardHook worldGuardHook;
     @Inject
-    private ForbiddenBlocksManager forbiddenBlocksManager;
-    @Inject
-    private DrugItemsService drugItemsService;
-    @Inject
     private Logger logger;
 
     @EventHandler
@@ -78,8 +71,6 @@ public class PlayerListener implements Listener {
                 event.getDamager().sendMessage("PVP is disabled for you or the target");
                 event.setCancelled(true);
             }
-        } else if (damagedPlayer != null && drugItemsService.isEnforcerZombie(event.getDamager())) {
-            drugItemsService.processIfHasDrugItems(damagedPlayer);
         }
     }
 
@@ -88,12 +79,7 @@ public class PlayerListener implements Listener {
         autoSowService.processPlayerMove(event.getPlayer());
     }
 
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
-        forbiddenBlocksManager.handleEvent(event);
-    }
-
-    @EventHandler
+    // Not used atm
     public void onTeleport(PlayerTeleportEvent event) {
         final Player player = event.getPlayer();
         if (Permission.WORLDGUARD_TP_BLOCK_OVERRIDE.allows(player)) {
